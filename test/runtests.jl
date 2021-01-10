@@ -1,6 +1,10 @@
 using ContextualBandits
-using Test
+using Test, Random, Distributions
 
-@testset "ContextualBandits.jl" begin
-    # Write your tests here.
+@testset "Context distribution" begin
+    include("test_cdist.jl")
+end
+
+@testset "Reward distribution" begin
+    include("test_rdist.jl")
 end
