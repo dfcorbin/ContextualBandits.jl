@@ -1,7 +1,7 @@
 function test_UniformContext_errors()
     colerror = ArgumentError("Bounds must have exactly two columns.")
     faulty_bounds = rand(2, 3)
-    @test_throws colerror UniformContext(faulty_bounds) 
+    @test_throws colerror UniformContext(faulty_bounds)
 end
 
 
