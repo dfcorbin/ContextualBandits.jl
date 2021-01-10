@@ -14,3 +14,8 @@ makedocs(;
         "Home" => "index.md",
     ],
 )
+
+deploydocs(;
+    repo="github.com/dfcorbin/ContextualBandits.jl.git",
+    devbranch="main"
+)
