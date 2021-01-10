@@ -24,4 +24,7 @@ export get_A
 export BanditPolicy, RandPol, choose, update!
 include("policy.jl")
 
+export simulate, BanditResults
+include("sim.jl")
+
 end
