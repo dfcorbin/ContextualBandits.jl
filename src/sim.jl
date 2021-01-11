@@ -9,7 +9,13 @@ struct BanditResults
 end
 
 
-function simulate(cdist::ContextDist, rdist::RewardDist, pol::BanditPolicy, T::Int64)
+function simulate(
+    cdist::ContextDist,
+    rdist::RewardDist,
+    pol::BanditPolicy,
+    T::Int64;
+    verbose::Bool = false,
+)
     dim = get_dim(cdist)
     context = Matrix{Float64}(undef, T, dim)
     action = Vector{Int64}(undef, T)
@@ -17,6 +23,9 @@ function simulate(cdist::ContextDist, rdist::RewardDist, pol::BanditPolicy, T::I
     total_regret = zeros(Float64, T + 1)
     x = Vector{Float64}(undef, dim)
     for t = 1:T
+        if verbose
+            print("\rTime step: $t")
+        end
         gen_context!(cdist, x)
         a = choose(pol, x)
         r = gen_reward(rdist, x, a)
