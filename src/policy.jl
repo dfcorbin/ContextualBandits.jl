@@ -246,7 +246,7 @@ function recursive_partition_TS(
         priorgen = priogen,
         shape = shape,
         scale = scale,
-        mindat,
-        Kmax,
+        mindat = mindat,
+        Kmax = Kmax
     )
 end
