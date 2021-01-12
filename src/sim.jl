@@ -16,6 +16,7 @@ function simulate(
     T::Int64;
     verbose::Bool = false,
 )
+    pol1 = deepcopy(pol)
     dim = get_dim(cdist)
     context = Matrix{Float64}(undef, T, dim)
     action = Vector{Int64}(undef, T)
@@ -27,13 +28,13 @@ function simulate(
             print("\rTime step: $t")
         end
         gen_context!(cdist, x)
-        a = choose(pol, x)
+        a = choose(pol1, x)
         r = gen_reward(rdist, x, a)
-        update!(pol, x, a, r)
+        update!(pol1, x, a, r)
         total_regret[t+1] = total_regret[t] + compute_regret(rdist, x, a)
         context[t, :] = x
         action[t] = a
         reward[t] = r
     end
-    return BanditResults(cdist, rdist, pol, context, action, reward, total_regret[2:end])
+    return BanditResults(cdist, rdist, pol1, context, action, reward, total_regret[2:end])
 end

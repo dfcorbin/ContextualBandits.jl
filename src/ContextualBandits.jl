@@ -16,7 +16,11 @@ using RecursivePartition:
     fit!
 using Distributions: Uniform, Normal, InverseGamma, MvNormal
 using LinearAlgebra: Symmetric
+using Distances: pairwise, Euclidean
+using Statistics: mean
 
+
+export Matvec, Vecvec
 include("utils.jl")
 
 # Getters and setters - cdist

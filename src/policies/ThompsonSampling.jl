@@ -132,6 +132,7 @@ function init_arm_model(X::Matrix{Float64}, y::Vector{Float64}, args::RecursiveT
         scale = get_scale(args::RecursiveTSArgs),
         mindat = get_mindat(args::RecursiveTSArgs),
         Kmax = get_Kmax(args::RecursiveTSArgs),
+        # verbose=true
     )
 end
 
@@ -210,12 +211,12 @@ function recursive_partition_TS(
     return recursive_partition_TS(
         A,
         dim,
-        bounds,
+        bounds1,
         burnin,
         retrain;
         degmax = degmax,
         maxparam = maxparam,
-        priorgen = priogen,
+        priorgen = priorgen,
         shape = shape,
         scale = scale,
         mindat = mindat,
