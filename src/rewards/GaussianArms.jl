@@ -1,6 +1,3 @@
-abstract type RewardDist end
-
-
 struct GaussianArms <: RewardDist
     means::Vector{Function}
     SD::Vector{Float64}
