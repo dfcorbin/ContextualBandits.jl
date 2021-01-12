@@ -1,3 +1,4 @@
 [deps]
 ContextualBandits = "36acd394-f996-4ca3-84ce-f99eafba1aa8"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+RecursivePartition = "d57b171a-2237-49d2-a8f0-cd22f4c2e2bf"
