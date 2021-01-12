@@ -1,6 +1,3 @@
-abstract type ContextDist end
-
-
 struct UniformContext <: ContextDist
     bounds::Matrix{Float64}
     function UniformContext(bounds::Matrix{Float64})
