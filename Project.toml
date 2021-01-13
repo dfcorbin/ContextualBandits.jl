@@ -12,6 +12,7 @@ RecursivePartition = "d57b171a-2237-49d2-a8f0-cd22f4c2e2bf"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [compat]
+Distances = "0.10"
 Distributions = "0.24"
 julia = "1.4.2"
 
