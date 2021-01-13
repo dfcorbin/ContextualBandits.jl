@@ -40,7 +40,8 @@ include("rewards/rewards.jl")
 # Getters and setters - policy
 export get_A
 
-export BanditPolicy, RandPol, choose, update!, RecursiveTSArgs, recursive_partition_TS
+export BanditPolicy, RandPol, choose, update!, RecursiveTSArgs, recursive_partition_TS,
+    NearestneighborsUCB
 include("policies/policies.jl")
 
 export simulate, BanditResults
