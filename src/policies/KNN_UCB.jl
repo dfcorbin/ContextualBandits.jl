@@ -36,16 +36,15 @@ function compute_upper_bound(pol::NearestneighborsUCB, x::Vector{Float64}, a::In
     t = get_t(pol::NearestneighborsUCB)
     distances, y_nearest = sort_nearest(pol, x, a)
     theta = get_theta(pol)
-    min_k = 0
-    min_uncertainty = Inf
+    uvals = Vector{Float64}(undef, length(y_nearest))
     for k in 1:length(y_nearest)
         radius = distances[k]
-        uncertainty = sqrt(theta * log(t) / k) + radius
-        if uncertainty < min_uncertainty
-            min_k = k
-            min_uncertainty = uncertainty
-        end
+        uvals[k] = sqrt(theta * log(t) / k) + radius
     end
+    min_uncertainty, min_k = findmin(uvals)
+    # println("min k: ", min_k)
+    # println("mean: ", mean(y_nearest[1:min_k]))
+    # println("min U: ", min_uncertainty)
     return mean(y_nearest[1:min_k]) + min_uncertainty
 end
 
