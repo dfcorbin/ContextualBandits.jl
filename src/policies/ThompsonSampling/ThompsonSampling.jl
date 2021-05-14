@@ -75,4 +75,5 @@ function update!(
     append_r!(pol, a, r)
     # This is implemented custom for the conctrete type
     update_arm_model!(pol, x, a, r)
+    inc_t!(pol, 1)
 end
