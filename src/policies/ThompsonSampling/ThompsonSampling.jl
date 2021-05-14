@@ -18,8 +18,8 @@ function ThompsonSampling(
 )
     t = 1
     arm_models = Vector{model_type}(undef, A)
-    X = fill(Matrix{Float64}(undef, 0, dim), A)
-    r = fill(Vector{Float64}(undef, 0), A)
+    X = deepcopy.(fill(Matrix{Float64}(undef, 0, dim), A))
+    r = deepcopy.(fill(Vector{Float64}(undef, 0), A))
     return ThompsonSampling(t, A, arm_models, model_args, X, r, burnin)
 end
 
