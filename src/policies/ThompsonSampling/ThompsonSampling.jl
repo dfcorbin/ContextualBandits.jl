@@ -9,11 +9,17 @@ mutable struct ThompsonSampling{T1,T2} <: BanditPolicy
 end
 
 
-function ThompsonSampling(A::Int64, dim::Int64, model_type::Type, model_args, burnin::Int64)
+function ThompsonSampling(
+    A::Int64,
+    dim::Int64,
+    model_type::Type,
+    model_args,
+    burnin::Int64,
+)
     t = 1
     arm_models = Vector{model_type}(undef, A)
-    X = [Matrix{Float64}(undef, 0, dim) for a = 1:A]
-    r = [Vector{Float64}(undef, 0) for a = 1:A]
+    X = fill(Matrix{Float64}(undef, 0, dim), A)
+    r = fill(Vector{Float64}(undef, 0), A)
     return ThompsonSampling(t, A, arm_models, model_args, X, r, burnin)
 end
 
@@ -59,11 +65,14 @@ function choose(pol::ThompsonSampling, x::Vector{Float64})
     end
 end
 
-
-function update!(pol::ThompsonSampling, x::Vector{Float64}, a::Int64, r::Float64)
+function update!(
+    pol::ThompsonSampling,
+    x::Vector{Float64},
+    a::Int64,
+    r::Float64,
+)
     append_X!(pol, a, x)
     append_r!(pol, a, r)
     # This is implemented custom for the conctrete type
     update_arm_model!(pol, x, a, r)
-    inc_t!(pol, 1)
 end
