@@ -76,12 +76,6 @@ function append_r!(pol::NearestneighborsUCB, a::Int64, val::Float64)
 end
 
 
-function update!(pol::NearestneighborsUCB, x::Vector{Float64}, a::Int64, r::Float64)
-    append_X!(pol, a, x)
-    push!(pol.r[a], val)
-end
-
-
 function update!(
     pol::NearestneighborsUCB,
     x::Vector{Float64},
