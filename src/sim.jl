@@ -25,7 +25,8 @@ function simulate(
     x = Vector{Float64}(undef, dim)
     for t = 1:T
         if verbose
-            print("\rTime step: $t")
+            reg = total_regret[t]
+            print("\rTime step: $t, regret: $reg")
         end
         gen_context!(cdist, x)
         a = choose(pol1, x)

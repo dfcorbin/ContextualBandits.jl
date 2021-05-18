@@ -3,6 +3,7 @@ mutable struct NearestneighborsUCB <: BanditPolicy
     r::Vecvec
     t::Int64
     theta::Float64
+    psi::Float64
 end
 
 get_A(pol::NearestneighborsUCB) = length(pol.X)
@@ -15,10 +16,10 @@ inc_t!(pol::NearestneighborsUCB, val) = begin
     pol.t += val
 end
 
-function NearestneighborsUCB(A::Int64, dim::Int64, theta::Float64)
-    X = fill(Matrix{Float64}(undef, 0, dim), A)
-    X = fill(Vector{Float64}(undef, 0), A)
-    return NearestneighborsUCB(X, r, 1, theta)
+function NearestneighborsUCB(A::Int64, dim::Int64, theta::Float64, psi::Float64)
+    X = deepcopy.(fill(Matrix{Float64}(undef, 0, dim), A))
+    r = deepcopy.(fill(Vector{Float64}(undef, 0), A))
+    return NearestneighborsUCB(X, r, 1, theta, psi)
 end
 
 function sort_nearest(pol::NearestneighborsUCB, x::Vector{Float64}, a::Int64)
@@ -43,7 +44,7 @@ function compute_upper_bound(
     uvals = Vector{Float64}(undef, length(y_nearest))
     for k = 1:length(y_nearest)
         radius = distances[k]
-        uvals[k] = sqrt(theta * log(t) / k) + radius
+        uvals[k] = sqrt(theta * log(t) / k) + pol.psi * log(t) * radius
     end
     min_uncertainty, min_k = findmin(uvals)
     return mean(y_nearest[1:min_k]) + min_uncertainty
@@ -56,12 +57,7 @@ function choose(pol::NearestneighborsUCB, x::Vector{Float64})
     if t <= A
         return t
     end
-    # Construct upper confidence bounds
-    upper_bounds = Vector{Float64}(undef, A)
-    for a in 1:A
-        upper_bounds[a] = compute_upper_bound(pol, x, a)
-        return t
-    end
+    
     # Construct upper confidence bounds
     upper_bounds = Vector{Float64}(undef, A)
     for a = 1:A
@@ -75,6 +71,10 @@ function append_r!(pol::NearestneighborsUCB, a::Int64, val::Float64)
     push!(pol.r[a], val)
 end
 
+function append_X!(pol::NearestneighborsUCB, a::Int64, val::Vector{Float64})
+    val1 = reshape(val, (1, :))
+    pol.X[a] = vcat(pol.X[a], val1)
+end
 
 function update!(
     pol::NearestneighborsUCB,
