@@ -41,7 +41,7 @@ include("rewards/rewards.jl")
 export get_A
 
 export BanditPolicy, RandPol, choose, update!, RecursiveTSArgs, recursive_partition_TS,
-    NearestneighborsUCB
+    NearestneighborsUCB, poly_TS
 include("policies/policies.jl")
 
 export simulate, BanditResults

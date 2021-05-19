@@ -1,17 +1,15 @@
-struct GaussianArms <: RewardDist
-    means::Vector{Function}
+struct GaussianArms{T<:Function} <: RewardDist
+    means::Vector{T}
     SD::Vector{Float64}
-    function GaussianArms(means, SD)
-        error = DimensionMismatch("SD must be same length as means")
-        if length(SD) != length(means)
-            throw(error)
+    GaussianArms(means, SD) = begin
+        if length(means) != length(SD)
+            throw(DimensionMismatch("SD must be same length as means"))
         end
-        return new(means, SD)
+        return new{typeof(means).parameters[1]}(means, SD)
     end
 end
 
-
-function GaussianArms(means::Vector{Function}, SD::Float64)
+function GaussianArms(means::Vector{<:Function}, SD::Float64)
     A = length(means)
     SDv = fill(SD, A)
     return GaussianArms(means, SDv)
